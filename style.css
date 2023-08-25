@@ -1,0 +1,80 @@
+/* bg #000
+orange #ff9501
+grey #a6a6a6
+white #fdfdfd */
+
+.calc {
+  margin: 50px auto;
+  width: 300px;
+  height: 500px;
+  border: 1px solid #000;
+  border-radius: 20px;
+  background: rgb(192, 197, 182);
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 18px;
+}
+
+.calc-screen {
+  height: 110px;
+  padding: 10px;
+  display: grid;
+  justify-items: end;
+  align-items: end;
+  margin-bottom: 8px;
+
+}
+
+.calc-screen p {
+  text-align: right;
+  font-size: 4rem;
+  margin: 0;
+}
+
+.buttons {
+  display: grid;
+  grid-template-areas: 
+  /* создаю грид сетку для выравнивания */
+  ". . ac division"
+  "seven eight nine multi"
+  "four five six minus"
+  "one two three plus"
+  "zero dot equal equal";
+  /* расстрояние между кнопками */
+  grid-gap: 7px;
+  /* выравниваю кнопки по центру в сетке */
+  justify-items: center;
+}
+
+.btn {
+  width: 60px;
+  height: 60px;
+  font-size: 20px;
+  background-color:  rgb(127, 156, 127);
+  border-radius: 30%;
+  text-align: center;
+  line-height: 60px;
+  cursor: pointer;
+  /* чтобы при дабл клике не выделялось */
+  user-select: none;
+}
+
+.btn.equal {
+  grid-area: equal;
+  width: 100%;
+  border-radius: 20%;
+}
+
+.btn:hover {
+  /* при наведении станет светлее */
+  filter: brightness(120%)
+}
+
+.btn.bg-green{
+  background: rgb(75, 102, 75) ;
+
+}
+
+.btn.bg-dgreen{
+  background: rgb(71, 119, 71);
+}
