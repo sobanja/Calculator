@@ -65,8 +65,6 @@ document.querySelector(".buttons").onclick = (event) => {
 
   // нажато равно
   if (key === "=") {
-    // чтобы можно было считать число + =
-    if (b === '') b = a;
     // в случае есть оператор +, то складываем 1 и 2 значение
     switch (sign) {
       case "+":
