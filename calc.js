@@ -1,96 +1,115 @@
-// первый символ
-let a = "";
-// второй
-let b = "";
-// знак операции
-let sign = "";
+const expressionElement = document.getElementById("expression");
+const resultElement = document.getElementById("result");
+const numberButtons = document.querySelectorAll(".number");
+const operatorButtons = document.querySelectorAll(".operator");
+const parenthesisButtons = document.querySelectorAll(".parenthesis");
+const calculateButton = document.getElementById("calculate");
 
-let finish = false;
-//будем проверять какие символы содержатся
-const simbol = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "."];
-const action = ["-", "+", "X", "/"];
+let expression = "";
 
-// экран
-const out = document.querySelector(".calc-screen p");
+numberButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    expression += button.textContent;
+    expressionElement.textContent = expression;
+  });
+});
 
-// clear all будет очищать переменные при клике на кнопку ac
-function clearAll() {
-  a = "";
-  b = "";
-  sign = "";
-  finish = false;
-  // тут находится начальное значение для экрана
-  out.textContent = 0;
+operatorButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    expression += " " + button.textContent + " ";
+    expressionElement.textContent = expression;
+  });
+});
+
+parenthesisButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    expression += " " + button.textContent + " ";
+    expressionElement.textContent = expression;
+  });
+});
+
+calculateButton.addEventListener("click", () => {
+  const result = evaluateExpression(expression);
+  resultElement.textContent = result;
+  expression = result.toString();
+  expressionElement.textContent = expression;
+});
+
+function evaluateExpression(expression) {
+  try {
+    // Implementing a simple stack-based expression evaluator
+    const tokens = expression.split(" ");
+    const stack = [];
+
+    for (const token of tokens) {
+      if (!isNaN(token)) {
+        stack.push(parseFloat(token));
+      } else if (token === "(") {
+        stack.push(token);
+      } else if (token === ")") {
+        let subExpression = [];
+        while (stack.length > 0 && stack[stack.length - 1] !== "(") {
+          subExpression.unshift(stack.pop());
+        }
+        stack.pop(); // Pop the "("
+        stack.push(evaluateSubExpression(subExpression));
+      } else if (token === "+" || token === "-" || token === "*" || token === "/") {
+        stack.push(token);
+      }
+    }
+
+    return evaluateSubExpression(stack);
+  } catch (error) {
+    return "Error";
+  }
 }
 
-document.querySelector(".ac").onclick = clearAll;
+function evaluateSubExpression(subExpression) {
+  const operators = [];
+  const operands = [];
 
-document.querySelector(".buttons").onclick = (event) => {
-  // если клик был на поле (вне кнопок) тогда ничего не будет
-  if (!event.target.classList.contains("btn")) return;
-  // нажата кнопка ac
-  if (event.target.classList.contains("ac")) return;
-
-  out.textContent = "";
-  // получаю нажатую кнопку
-  const key = event.target.textContent;
-
-  //если нажата кнопка 0-9 или . то заносим значение в переменную с 1ым символом
-  if (simbol.includes(key)) {
-    // если перем для 2 символа и для знаков пусты, значит мы работает с 1 символом
-    if (b === "" && sign === "") {
-      a += key;
-      // заносим значение на экран (которое нажали)
-      out.textContent = a;
-      // если произошло вычисление, знач пусты, но финиш true
-    } else if (a !== "" && b !== "" && finish) {
-      b = key;
-      finish = false;
-      out.textContent = b;
-      // заношу в б, если был нажат знак
-    } else {
-      b += key;
-      out.textContent = b;
+  for (const token of subExpression) {
+    if (!isNaN(token)) {
+      operands.push(token);
+    } else if (token === "+" || token === "-" || token === "*" || token === "/") {
+      while (operators.length > 0 && precedence(operators[operators.length - 1]) >= precedence(token)) {
+        const operator = operators.pop();
+        const operand2 = operands.pop();
+        const operand1 = operands.pop();
+        operands.push(applyOperator(operator, operand1, operand2));
+      }
+      operators.push(token);
     }
-    return;
-  }
-  // проверяем если нажаты кнопки символов
-  // если true то на экран выводим значение переменной sign (там будет нажатый символ)
-  if (action.includes(key)) {
-    sign = key;
-    out.textContent = sign;
-    console.log(sign);
-    return;
   }
 
-  // нажато равно
-  if (key === "=") {
-    // в случае есть оператор +, то складываем 1 и 2 значение
-    switch (sign) {
-      case "+":
-        // тк строки, чтобы не было конкатенации, пишем ()
-        a = (+a) + (+b);
-        break;
-      case "-":
-        a = a - b;
-        break;
-      case "X":
-        a = a * b;
-        break;
-      case "/":
-        if (b === '0') {
-          out.textContent = 'Ошибка'
-          a = '';
-          b = '';
-          sign = '';
-          return;
-        }
-        a = a / b;
-        break;
-    }
-    // ВЫЧИСЛЕНИЯ ОКОНЧЕНЫ
-    finish = true;
-    // выводим вычисл на экран
-    out.textContent = a;
+  while (operators.length > 0) {
+    const operator = operators.pop();
+    const operand2 = operands.pop();
+    const operand1 = operands.pop();
+    operands.push(applyOperator(operator, operand1, operand2));
   }
-};
+
+  return operands[0];
+}
+
+function precedence(operator) {
+  if (operator === "+" || operator === "-") {
+    return 1;
+  } else if (operator === "*" || operator === "/") {
+    return 2;
+  }
+  return 0;
+}
+
+function applyOperator(operator, operand1, operand2) {
+  switch (operator) {
+    case "+":
+      return operand1 + operand2;
+    case "-":
+      return operand1 - operand2;
+    case "*":
+      return operand1 * operand2;
+    case "/":
+      return operand1 / operand2;
+  }
+}

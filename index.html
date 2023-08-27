@@ -1,42 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Calculator</title>
-	<link rel="stylesheet" href="style.css">
+  <title>Calculator</title>
+  <link rel="stylesheet" href="./index.css" />
 </head>
+
 <body>
-	<sc>
-	<div class="calc">
-		<div class="calc-screen">
-			<p>0</p>
-		</div>
-			<div class="buttons">
-				<div class="btn bg-green">.</div>
-				<div class="btn bg-green">.</div>
-				<div class="btn ac bg-green">ac</div>
-				<div class="btn division bg-green">/</div>
+  <div class="calc">
+    <div class="calc-screen">
+      <div id="expression"></div>
+      <div id="result"></div>
+    </div>
+    <div class="buttons">
+      <div class="btn ac bg-green">ac</div>
+      <div class="parenthesis btn bracket1 bg-green">(</div>
+      <div class="parenthesis btn bracket2 bg-green">)</div>
+      <div class="operator btn division bg-green">/</div>
 
-				<div class="btn seven ">7</div>
-				<div class="btn eight ">8</div>
-				<div class="btn nine ">9</div>
-				<div class="btn myltiply bg-dgreen">X</div>
+      <div class="number btn seven ">7</div>
+      <div class="number btn eight ">8</div>
+      <div class="number btn nine ">9</div>
+      <div class="operator btn myltiply bg-dgreen">X</div>
 
-				<div class="btn four ">4</div>
-				<div class="btn five ">5</div>
-				<div class="btn six ">6</div>
-				<div class="btn minus bg-dgreen">-</div>
-				
-				<div class="btn one">1</div>
-				<div class="btn two">2</div>
-				<div class="btn three">3</div>
-				<div class="btn plus bg-dgreen">+</div>
+      <div class="number btn four ">4</div>
+      <div class="number btn five ">5</div>
+      <div class="number btn six ">6</div>
+      <div class="operator btn minus bg-dgreen">-</div>
 
-				<div class="btn zero">0</div>
-				<div class="btn dot">.</div>
-				<div class="btn equal bg-dgreen">=</div>
-				</div>
-				<script src="calc.js"></script>
+      <div class="number btn one">1</div>
+      <div class="number btn two">2</div>
+      <div class="number btn three">3</div>
+      <div class="operator btn plus bg-dgreen">+</div>
+
+      <div class="number btn zero">0</div>
+      <div class="btn dot">.</div>
+      <div id="calculate" class="btn equal bg-dgreen">=</div>
+    </div>
+
+    <script src="./index.js"></script>
 </body>
+
 </html>
