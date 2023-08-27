@@ -17,7 +17,8 @@
   justify-items: end;
   align-items: end;
   margin-bottom: 8px;
-  font-size: 60px;
+  font-size: 35px;
+  caret-color: transparent;
 
 }
 
