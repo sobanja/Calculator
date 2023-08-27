@@ -1,8 +1,3 @@
-/* bg #000
-orange #ff9501
-grey #a6a6a6
-white #fdfdfd */
-
 .calc {
   margin: 50px auto;
   width: 300px;
@@ -22,6 +17,7 @@ white #fdfdfd */
   justify-items: end;
   align-items: end;
   margin-bottom: 8px;
+  font-size: 60px;
 
 }
 

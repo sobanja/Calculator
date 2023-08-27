@@ -1,11 +1,20 @@
+// значение, которое выводится на странице
 const expressionElement = document.getElementById("expression");
 const resultElement = document.getElementById("result");
+// цифры
 const numberButtons = document.querySelectorAll(".number");
+// операторы
 const operatorButtons = document.querySelectorAll(".operator");
-const parenthesisButtons = document.querySelectorAll(".parenthesis");
+// скобки
+const bracketButtons = document.querySelectorAll(".bracket");
+// кнопка равно
 const calculateButton = document.getElementById("calculate");
+// clear btn
+const ac = document.querySelector(".ac");
 
+// высчитываемое выражение
 let expression = "";
+expressionElement.textContent = "0";
 
 numberButtons.forEach(button => {
   button.addEventListener("click", () => {
@@ -21,7 +30,7 @@ operatorButtons.forEach(button => {
   });
 });
 
-parenthesisButtons.forEach(button => {
+bracketButtons.forEach(button => {
   button.addEventListener("click", () => {
     expression += " " + button.textContent + " ";
     expressionElement.textContent = expression;
@@ -34,6 +43,14 @@ calculateButton.addEventListener("click", () => {
   expression = result.toString();
   expressionElement.textContent = expression;
 });
+
+// clear all будет очищать переменные при клике на кнопку ac
+function clearAll() {
+  expressionElement.textContent = '0';
+  expression = '';
+}
+
+document.querySelector(".ac").onclick = clearAll;
 
 function evaluateExpression(expression) {
   try {
